@@ -1,5 +1,6 @@
 package com.musicstore.dao;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class ProductDao {
 
 	public List<Product> getAllProducts() {
 		Product product = new Product();
+		product.setProductId("P1");
 		product.setProductName("4 Hour Work Week");
 		product.setProductCategory("Book");
 		product.setProductCondition("new");
@@ -21,6 +23,7 @@ public class ProductDao {
 		product.setUnitInStock(109);
 
 		Product product2 = new Product();
+		product2.setProductId("P2");
 		product2.setProductName("Richie Rich");
 		product2.setProductCategory("Book");
 		product2.setProductCondition("new");
@@ -33,5 +36,10 @@ public class ProductDao {
 		productList.add(product2);
 
 		return productList;
+	}
+
+	public Product getProductById(String productId) throws IOException {
+		return getAllProducts().stream().filter(product -> product.getProductId().equals(productId)).findFirst()
+				.orElseThrow(() -> new IOException("No product found for ID " + productId));
 	}
 }
