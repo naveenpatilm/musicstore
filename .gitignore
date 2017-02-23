@@ -2,6 +2,10 @@
 /.classpath
 /.project
 .classpath
+target/
+/target/
+*/target/*
+/target/*
 
 .project
 
