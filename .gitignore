@@ -34,3 +34,17 @@ target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
 *.class
 
 *.class
+
+.springBeans
+
+*.properties
+
+*.class
+
+*.class
+
+target/classes/com/musicstore/controller/HomeController.class
+
+target/classes/com/musicstore/controller/HomeController.class
+
+target/classes/com/musicstore/dao/ProductDao.class
