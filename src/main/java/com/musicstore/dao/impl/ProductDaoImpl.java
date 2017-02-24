@@ -2,9 +2,9 @@ package com.musicstore.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +38,7 @@ public class ProductDaoImpl implements ProductDao {
 	public List<Product> getAllProducts() {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from Product");
-		List<Product> productList = query.getResultList();
+		List<Product> productList = query.list();
 		session.flush();
 		return productList;
 	}
