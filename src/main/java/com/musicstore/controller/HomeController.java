@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.musicstore.dao.ProductDao;
 import com.musicstore.model.Product;
@@ -51,12 +53,20 @@ public class HomeController {
 	}
 
 	@RequestMapping("/admin/productInventory/addProduct")
-	public String addProduct(Model model) {
-		Product product = new Product();
-		product.setProductCategory("Instrument");
-		product.setProductCondition("new");
-		product.setProductStatus("availaible");
-		model.addAttribute("product", product);
+	public String addProduct() {
 		return "addProduct";
+	}
+
+	@RequestMapping(value = "/admin/productInventory/addProduct", method = RequestMethod.POST)
+	public String addProductPost(@ModelAttribute("product") Product product) {
+		productDao.addProduct(product);
+		return "redirect:/admin/productInventory";
+
+	}
+
+	@RequestMapping(value = "/admin/productInventory/deleteProduct/{productId}")
+	public String deleteProduct(@PathVariable String productId) {
+		productDao.deleteProduct(productId);
+		return "redirect:/admin/productInventory";
 	}
 }

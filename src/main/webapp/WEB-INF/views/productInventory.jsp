@@ -31,11 +31,13 @@
 					<td>${product.productPrice}Rs</td>
 					<td><a
 						href="<spring:url value="/productList/viewProduct/${product.productId}"/>"><span
-							class="glyphicon glyphicon-eye-open"></span></a></td>
+							class="glyphicon glyphicon-eye-open"></span></a> <a
+						href="<spring:url value="/admin/productInventory/deleteProduct/${product.productId}"/>"><span
+							class="glyphicon glyphicon-remove"></span></a></td>
 				</tr>
 			</c:forEach>
 		</table>
 
-		<a href="<spring:url value="/admin/productInventory/addProduct"/>" class="btn btn-primary">Add
-			Product</a>
+		<a href="<spring:url value="/admin/productInventory/addProduct"/>"
+			class="btn btn-primary">Add Product</a>
 		<%@ include file="/WEB-INF/views/template/footer.jsp"%>
