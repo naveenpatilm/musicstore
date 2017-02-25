@@ -53,7 +53,8 @@ public class HomeController {
 	}
 
 	@RequestMapping("/admin/productInventory/addProduct")
-	public String addProduct() {
+	public String addProduct(Model model) {
+		model.addAttribute(new Product());
 		return "addProduct";
 	}
 
