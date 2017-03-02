@@ -2,6 +2,7 @@ package com.musicstore.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -24,7 +25,7 @@ import com.musicstore.model.Product;
 
 @Controller
 public class HomeController {
-	
+
 	private Path path;
 
 	@Autowired
@@ -73,8 +74,8 @@ public class HomeController {
 		productDao.addProduct(product);
 		MultipartFile productImage = product.getProductImage();
 		String rootDirectory = httpServletRequest.getSession().getServletContext().getRealPath("/");
-		path = Paths.get(rootDirectory + "\\WEB-INF\\resources\\images\\" + product.getProductId() + ".png");
-		if(productImage != null && !productImage.isEmpty()) {
+		path = Paths.get(rootDirectory + "/WEB-INF/resources/images/" + product.getProductId() + ".png");
+		if (productImage != null && !productImage.isEmpty()) {
 			try {
 				productImage.transferTo(new File(path.toString()));
 			} catch (Exception e) {
@@ -87,8 +88,16 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/admin/productInventory/deleteProduct/{productId}")
-	public String deleteProduct(@PathVariable String productId) {
+	public String deleteProduct(@PathVariable String productId, HttpServletRequest httpServletRequest) {
 		productDao.deleteProduct(productId);
+		String rootDirectory = httpServletRequest.getSession().getServletContext().getRealPath("/");
+		path = Paths.get(rootDirectory + "/WEB-INF/resources/images/" + productId + ".png");
+		if (Files.exists(path))
+			try {
+				Files.delete(path);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		return "redirect:/admin/productInventory";
 	}
 }
