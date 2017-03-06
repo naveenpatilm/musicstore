@@ -100,4 +100,32 @@ public class HomeController {
 			}
 		return "redirect:/admin/productInventory";
 	}
+
+	@RequestMapping("/admin/productInventory/editProduct/{productId}")
+	public String editProduct(@PathVariable String productId, Model model) {
+		Product product = productDao.getProductById(productId);
+		model.addAttribute(product);
+
+		return "editProduct";
+	}
+
+	@RequestMapping(value = "/admin/productInventory/editProduct", method = RequestMethod.POST)
+	public String editProduct(@ModelAttribute("product") Product product, Model model,
+			HttpServletRequest httpServletRequest) {
+		MultipartFile productImage = product.getProductImage();
+		String rootDirectory = httpServletRequest.getSession().getServletContext().getRealPath("/");
+		path = Paths.get(rootDirectory + "/WEB-INF/resources/images/" + product.getProductId() + ".png");
+		if (productImage != null && !productImage.isEmpty()) {
+			try {
+				productImage.transferTo(new File(path.toString()));
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException("Product image saving failed");
+			}
+		}
+		productDao.editProduct(product);
+		return "redirect:/admin/productInventory";
+
+	}
+
 }
